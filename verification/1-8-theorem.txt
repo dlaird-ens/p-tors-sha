@@ -1,0 +1,1 @@
+Theorem 1.8 is the output of running the code `../congruence_search/congruence_run.sage` and `../congruence_search/combine_lset_run.sage` as described in the README.md in that directory.
