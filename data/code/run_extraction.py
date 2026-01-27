@@ -1,5 +1,5 @@
 # To run in the sage shell with the LMFDB API in order to retrieve all the
-# quadratic forms of w/ 1 <= N <= 10000
+# modular forms of w/ 1 <= N <= 10000
 
 from lmf import db
 from extract_data import *
@@ -20,7 +20,7 @@ def partial_merge(merged, data):
 def merge_local():
     merged = {}
 
-    path = '../all.json'
+    path = '../nfs_dim_bd_4.json'
     print(path)
     with open(path, 'r') as f:
         data = json.load(f)
@@ -36,7 +36,7 @@ def merge_local():
         
     # Convert back to lists
     merged = {k: list(v.values()) for k, v in merged.items()}
-    with open('../all.json', 'w') as f:
+    with open('../nfs_dim_bd_4.json', 'w') as f:
         json.dump(merged, f, indent=2)
 
         
@@ -44,7 +44,7 @@ def main(min_level, max_level):
     table = []
     start = time.time()
     for n in range(min_level, max_level + 1) : 
-        group = get_forms(n, 2, 1, deg_bd=20)
+        group = get_forms(n, 2, 1, deg_bd=4)
         table.append(group)
         if n % 10 == 0: 
             print(f'Done with level {n} : {time.time() - start:.2f}')
