@@ -49,7 +49,11 @@ else:
 
 def dump_out_congs(p, lset_ind, congs, hs, target_dir="../data/"):
     """
+    Prints out `p`-congruences `cong` which we found (for the set L_(lset_ind) )
+    into a storage file. The corresponding hashes for each congruence in `congs`
+    are `hs`.
 
+    Warning: Congruences are not checked, this is just printing them out.
     """
     os.makedirs(target_dir + f"congruences/{lset_ind}", exist_ok=True)
     os.makedirs(target_dir + f"congruences/{lset_ind}_hash", exist_ok=True)

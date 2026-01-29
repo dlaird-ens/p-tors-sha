@@ -43,7 +43,14 @@ else:
 
 def flatten(data):
     """
+    The input data will be the lists of congruences which we sieved using the
+    sets L_i of test primes. This flattens out these 6 lists into one list
+    containing each potential congruence with no repeats.
 
+    Note
+    ----
+    This reason for the internal loops is that congruences are presented as lists
+    with the same hash (not simply pairs).
     """
     data = [cong for licongs in data for cong in licongs]
     merged = []
@@ -74,7 +81,8 @@ def flatten(data):
 
 def load_congs(p, dim_bd=4, target_dir="../data/"):
     """
-
+    Loads the congruences which have been precomputed and output into the
+    data files {target_dir}/congruences/*/{p}.json
     """
     pattern = f"congruences/*/{p}.json"
     files = list(Path(target_dir).glob(pattern))
@@ -105,7 +113,7 @@ def load_congs(p, dim_bd=4, target_dir="../data/"):
 
 def dump_out_final_congs(p, congs, target_dir="../data/"):
     """
-
+    Dumps out the `p`-congruences which have been combined
     """
     os.makedirs(target_dir + f"congruences/combined", exist_ok=True)
     cong_file = target_dir + f"congruences/combined/{p}.json"

@@ -25,7 +25,8 @@ def load_forms(filename="../data/nfs_dim_bd_4.json",
                min_lev=1,
                max_lev=10000):
     """
-    
+    Loads the forms for the file `filename` with the given dimension bound and
+    levels specified.
     """
     with open(filename, "r") as f:
         data = json.load(f)
@@ -74,7 +75,8 @@ def unpack_traces(form, a):
 
 def get_trace_and_norm_form(form):
     """
-
+    Given a form (in our format, as a dictionary as loaded by `load_forms`)
+    returns the traces and norms of the first few a_p as a list.
     """
     R.<u> = PolynomialRing(QQ)
     K.<a> = NumberField(R(form['field_poly']))
@@ -160,7 +162,10 @@ def make_hash_table(forms_by_field, p, list_of_l):
 
 def verify_cong_for_primes(form1: dict, form2: dict, p: int, list_of_l: list) -> (bool, list):
     """
-
+    Given a pair of forms `form1` and `form2` a prime number `p` and a list of
+    prime numbers `list_of_l`, check whether there exists a pair of prime ideals
+    pp and qq above p such that the forms are (pp,qq)-congruent for each l in
+    the `list_of_l`
     """
     R.<u> = PolynomialRing(QQ)
     deg_bd = max([form1['dim'], form2['dim']])
@@ -189,7 +194,8 @@ def verify_cong_for_primes(form1: dict, form2: dict, p: int, list_of_l: list) ->
 
 def list_to_verified(cong: list, p: int, list_of_l: list):
     """
-
+    Given a list of candidate congruences `cong` for a prime `p` return the 
+    pairs which are (pp,qq)-congruence for the test list of primes `list_of_l`
     """
     ret = []
     pairs = list(combinations([x for x in cong], 2))
@@ -204,7 +210,9 @@ def list_to_verified(cong: list, p: int, list_of_l: list):
 
 def get_congs_from_hash_table(hash_table: dict, p: int, verify_ish=False) -> list:
     """
-    Given a hash table return the congruences within 
+    Given a hash table (of the form returned by `make_hash_table` return the
+    congruences within. If the flag `verify_ish` is set to true then the
+    congruences are then further checked for each good prime l <= 1000
     """
     # Hashes can sometimes contain twice the same form (for different primes) we
     # don't deal with this case, but it wouldn't be hard to incorporate

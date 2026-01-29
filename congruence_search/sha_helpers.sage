@@ -23,7 +23,7 @@ signal.signal(signal.SIGALRM, timeout_handler)
 
 def load_weier(filename="../data/label_to_curve.json"):
     """
-
+    Loads the Weierstrass equations for the data file.
     """
     with open(filename, "r") as f:
         data = json.load(f)
@@ -31,19 +31,22 @@ def load_weier(filename="../data/label_to_curve.json"):
 
 
 def mult_primes(N):
-    
+    """
+    Returns those prime exactly dividing N
+    """
     facts = list(Integer(N).factor())
     return [p[0] for p in facts if p[1] == 1]
 
 
 def pdiv(N):
-    
+    """
+    Returns the prime divisors of N
+    """
     facts = list(Integer(N).factor())
     return [p[0] for p in facts]
 
 
 def magma_get_component_gp_regmod(C, p):
-    
     magma_str = f"C := {C};"
     magma_str += f"p := {p};"
     with open("comp_gp_regmod.m", "r") as f:
@@ -52,7 +55,6 @@ def magma_get_component_gp_regmod(C, p):
 
 
 def magma_get_component_gp_kohelstein(fm, ps):
-    
     tr, nm = get_trace_and_norm_form(fm)
     magma_str = f"level := {fm['level']};"
     magma_str += f"dim := {fm['dim']};"
