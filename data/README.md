@@ -1,4 +1,4 @@
-This directory contains the data for the article. The file `nfs_dim_db_4.json` contains the newforms in the LMFBD whose coefficient fields have degree $\leq 4$ (in a format which can be used by the files in `../congruence_search`). This data can also be extracted using `./code/run_extraction.py` (this may take some time).
+This directory contains the data for the article. The file `nfs_dim_db_4.json` (which will not be automatically populated) contains the newforms in the LMFBD whose coefficient fields have degree $\leq 4$ (in a format which can be used by the files in `../congruence_search`). This data can also be extracted using `./code/run_extraction.py` (this may take some time and a stable internet connection).
 
 ## The (probable) congruences 
 The pairs of $(\mathfrak{p}, \mathfrak{q})$-congruent forms claimed in Theorem 1.8 are listed in the files `./congruences/p.txt` where `p` is the prime lying above $\mathfrak{p}$ and $\mathfrak{q}$.

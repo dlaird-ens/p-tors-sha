@@ -42,7 +42,7 @@ def load_forms(filename="../data/nfs_dim_bd_4.json",
                 to_del.append(k)
         for fms in to_del:
             del data[fms]
-        
+            
     return data
 
 

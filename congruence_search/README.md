@@ -1,4 +1,4 @@
-This directory contains the code to prove Theorem 1.8. 
+This directory contains the code to prove Theorem 1.8. Note that to run most of the scripts in this directory you should populate the file `../data/nfs_dim_db_4.json` as described therein.
 
 ## Structure
 - `congruence_search.sage` this is the main file containing the functions to perform the seive described in the article. 
@@ -14,7 +14,7 @@ This directory contains the code to prove Theorem 1.8.
 ## Proof of Theorem 1.8
 This can be done by running the following shell script, which completes the proof. 
 
-*Warning:* This will take a long time and it may be better to do this in the background. For us this needs about 5GB of virtual memory (if you choose to run the commands in parallel rather than in a loop you will need $5n$GB).
+*Warning:* This will take a long time (some 20 mins per prime and $\mathcal{L}_i$) and it may be better to do this in the background. For us this needs about 5GB of virtual memory (if you choose to run the commands in parallel rather than in a loop you will need $5n$GB).
 
 ```bash
 for ii in 0 1 2 3 4 5
