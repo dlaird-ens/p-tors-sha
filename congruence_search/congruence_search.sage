@@ -24,10 +24,7 @@ def load_forms(filename="../data/nfs_dim_bd_4.json",
                dim_bd=4,
                min_lev=1,
                max_lev=10000):
-    """
-    Loads the forms for the file `filename` with the given dimension bound and
-    levels specified.
-    """
+
     with open(filename, "r") as f:
         data = json.load(f)
 

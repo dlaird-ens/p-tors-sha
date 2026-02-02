@@ -41,6 +41,7 @@ def merge_local():
 
         
 def main(min_level, max_level):
+    os.makedirs("../local/", exist_ok=True)
     table = []
     start = time.time()
     for n in range(min_level, max_level + 1) : 
