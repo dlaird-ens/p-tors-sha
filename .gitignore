@@ -3,7 +3,6 @@ __pycache__
 .venv
 *.sage.py
 *local*
-data/nfs*
 data/sha/*
 data/congruences/0/*
 data/congruences/0_hash/*
