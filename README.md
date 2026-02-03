@@ -1,6 +1,6 @@
 This is the GitHub repository containing code related to the paper [*Modular abelian surfaces of small conductor with nontrivial Tate-Shafarevich groups*](https://arxiv.org) by Sam Frengley and Dylan Laird [arXiv:??](https://arxiv.org).
 
-Most of the code in this repository is written in either [SageMath](https://www.sagemath.org) or [Magma](http://magma.maths.usyd.edu.au/magma/). We have tested on Magma version 2.27-8 and SageMath version 9.5 (Python 3.10.12).
+Most of the code in this repository is written in either [SageMath](https://www.sagemath.org) or [Magma](http://magma.maths.usyd.edu.au/magma/). We have tested on Magma version 2.27-8, SageMath version 9.5, and Python 3.10.12.
 
 ## Structure
 - The directory `./verifications/` contains code sufficient to prove the claims in the paper (with the exception of Theorem 1.8).

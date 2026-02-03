@@ -1,6 +1,11 @@
 """
-To run with the LMFDB-lite repo in order to retrieve all the
+run_extraction.py
+=================
+To run (with LMFDB-lite installed) in order to retrieve all the
 modular forms of w/ 1 <= N <= 10000
+
+Run as for example
+> python3 run_extraction.py
 """
 
 from lmf import db

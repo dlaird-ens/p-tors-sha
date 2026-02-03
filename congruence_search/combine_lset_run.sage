@@ -12,6 +12,7 @@ Run as for example
 > sage combine_lset_run.sage --d "../data/."
 
 """
+
 load("congruence_search.sage")
 import json
 from pathlib import Path
@@ -41,12 +42,23 @@ else:
 ################################################################################
 
 
-def flatten(data):
-    """
+def flatten(data: list) -> list:
+    """Flattens the congruences from multiple lists into a single list
+    
     The input data will be the lists of congruences which we sieved using the
     sets L_i of test primes. This flattens out these 6 lists into one list
     containing each potential congruence with no repeats.
 
+    Parameters
+    ----------
+    data : list
+        A list of lists which are those congruences for L_i
+
+    Returns
+    -------
+    list
+        The list consisting of all the congruences contained in any L_i.
+    
     Note
     ----
     This reason for the internal loops is that congruences are presented as lists
@@ -67,7 +79,9 @@ def flatten(data):
             union_set = curr_set
             info = curr
             for i in reversed(to_merge):
-                union_set = union_set.union(set([x['label'] for x in merged[i]]))
+                union_set = union_set.union(
+                    set([x['label'] for x in merged[i]])
+                )
                 info += merged[i]
                 merged.pop(i)
             ret = []
@@ -79,10 +93,25 @@ def flatten(data):
     return merged
 
 
-def load_congs(p, dim_bd=4, target_dir="../data/"):
-    """
-    Loads the congruences which have been precomputed and output into the
-    data files {target_dir}/congruences/*/{p}.json
+def load_congs(p: int, dim_bd=4, target_dir="../data/") -> dict:
+    """Loads the congruences which have been precomputed
+
+    Loads congruences from the precomputed output data files
+    {target_dir}/congruences/*/{p}.json
+
+    Parameters
+    ----------
+    p : int
+        Prime number whose congruences we wish to load
+    dim_bd : int, default=4
+        The upper bound on the dimension fo the forms
+    target_dir : str, default="../data/"
+        The data directory
+    
+    Returns
+    -------
+    return_type
+        Return value description
     """
     pattern = f"congruences/*/{p}.json"
     files = list(Path(target_dir).glob(pattern))
@@ -111,9 +140,24 @@ def load_congs(p, dim_bd=4, target_dir="../data/"):
     return data
     
 
-def dump_out_final_congs(p, congs, target_dir="../data/"):
-    """
-    Dumps out the `p`-congruences which have been combined
+def dump_out_final_congs(p: int, congs: list, target_dir="../data/"):
+    """Dumps out the combined `p`-congruences
+
+    Outputs the `p`-congruences (provided by `congs`) into storage files
+    {target_dir}/congruences/combined
+
+    Parameters
+    ----------
+    p : int
+        A prime number
+    congs : list
+        A list of `p`-congruences
+    target_dir : str
+        The data directory
+
+    Returns
+    -------
+    None
     """
     os.makedirs(target_dir + f"congruences/combined", exist_ok=True)
     cong_file = target_dir + f"congruences/combined/{p}.json"

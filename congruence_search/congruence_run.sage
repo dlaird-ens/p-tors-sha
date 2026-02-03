@@ -1,6 +1,6 @@
 """
 congruence_run.sage
-=====================
+===================
 This is a script to compute the hash tables and output duplicated hashes into
 the directory specified by the --d flag.
 
@@ -48,11 +48,31 @@ else:
 ################################################################################
 
 def dump_out_congs(p, lset_ind, congs, hs, target_dir="../data/"):
-    """
-    Prints out `p`-congruences `cong` which we found (for the set L_(lset_ind) )
-    into a storage file. The corresponding hashes for each congruence in `congs`
-    are `hs`.
+    """Prints the `p`-congruences into a storage file
+    
+    Prints out `p`-congruences `cong` which we found (for the
+    set :math:`\mathcal{L}_{i}` where `i = lset_ind` into a storage file.
+    The corresponding hashes for each congruence in `congs` are `hs`.
 
+    Parameters
+    ----------
+    p : int
+        A prime number
+    lset_ind : int
+        An integer :math:`0 \leq lset_ind \leq 6`
+    congs : list
+        A list of `p`-congruences
+    hs : list
+        The corresponding list of hashes for `congs`
+    target_dir : str, default="../data/"
+        The data directory
+    
+    Returns
+    -------
+    None
+    
+    Note
+    ----
     Warning: Congruences are not checked, this is just printing them out.
     """
     os.makedirs(target_dir + f"congruences/{lset_ind}", exist_ok=True)

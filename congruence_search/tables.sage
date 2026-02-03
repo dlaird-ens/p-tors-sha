@@ -25,8 +25,7 @@ def load_congs(p, dim_bd=4, target_dir="../data/"):
 ################################################################################
 # TABLE B.1
 def congs_table(low_p, dim_bd=2, target_dir="../data/"):
-    """
-    Outputs in latex format
+    """Outputs in latex format
     """
     ret = ""
     my_p = [p for p in SMALL_PRIMES if p >= low_p]
@@ -50,8 +49,7 @@ def congs_table(low_p, dim_bd=2, target_dir="../data/"):
 
 
 def congs_table_txt(low_p, dim_bd=2, target_dir="../data/"):
-    """
-    Machine readable format
+    """Machine readable format
     """
     my_p = [p for p in SMALL_PRIMES if p >= low_p]
     data = [load_congs(p, dim_bd=dim_bd) for p in my_p]
@@ -101,8 +99,7 @@ def congs_mismatched_table(low_p, dim_a, dim_b, target_dir="../data/"):
 ################################################################################
 # WEIRSTASS TABLE
 def make_weier_table(l):
-    """
-    Given a list of forms whose associated jacobians are known, output the
+    """Given a list of forms whose associated jacobians are known, output the
     equivalent of Table B.3
     """
     R.<x> = PolynomialRing(QQ)

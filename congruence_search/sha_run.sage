@@ -40,8 +40,7 @@ else:
 WEIER = load_weier(TARGET_DIR + "label_to_curve.json")
 
 def load_congs(p, dim_bd=4, target_dir="../data/"):
-    """
-    
+    """Load the precomputed congruences     
     """
     pattern = f"congruences/combined/{p}.json"
     with open(target_dir + pattern, "r") as f:
@@ -49,6 +48,7 @@ def load_congs(p, dim_bd=4, target_dir="../data/"):
     data = [[x for x in cong if x['dim'] <= dim_bd] for cong in data]
     data = [cong for cong in data if len(cong) >= 2]
     return data
+
 
 if __name__ == "__main__":
     congs = load_congs(p, dim_bd=4)

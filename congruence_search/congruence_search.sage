@@ -1,6 +1,7 @@
 """
 congruence_search.sage
 ======================
+Functions for searching for congruences among a list of modular forms.
 
 """
 
@@ -23,15 +24,33 @@ P_SETS = [[PRIMES.index(p) for p in pp] for pp in P_SETS]
 def load_forms(filename="../data/nfs_dim_bd_4.json",
                dim_bd=4,
                min_lev=1,
-               max_lev=10000):
+               max_lev=10000) -> dict:
+    """Load the saved forms in the data file `filename`
 
+    Loads the forms saved in the data file `filename` with the upper dimension
+    of `dim_bd` and the maximum and minimum levels specified.
+
+    Parameters
+    ----------
+    filename : str, default="../data/nfs_dim_bd_4.json"
+        The name of the file storing the forms
+    dim_bd : int, default=4
+        The upper bound of the dimension of the forms to keep
+    min_lev : int, default=1
+        Lowest level
+    max_level : int, default=10000
+        Highest level
+    
+    Returns
+    -------
+    dict
+        The forms keyed by the minimal polynomial of their coefficient field.
+    """
     with open(filename, "r") as f:
         data = json.load(f)
-
     to_del = [k for k,v in data.items() if v[0]['dim'] > dim_bd];
     for fms in to_del:
         del data[fms]
-
     if min_lev != 1 or max_lev != 10000:
         to_del = []
         for k in data.keys():
@@ -40,13 +59,27 @@ def load_forms(filename="../data/nfs_dim_bd_4.json",
                 to_del.append(k)
         for fms in to_del:
             del data[fms]
-            
     return data
 
 
 def unpack_traces(form, a):
-    """
-    Unpack the traces of Frobenius. K = Q(a)
+    """Return the a_p values for the form
+
+    Given the field generated primitively as :math:`K = \mathbb{Q}(a)`
+    and a modular form `form` extract the a_p-values
+
+    Parameters
+    ----------
+    form : dict
+        The modular form
+    a
+        A primitive generator for the number field K.<a> (the coefficient field
+        of the form)
+    
+    Returns
+    -------
+    return_type
+        Return value description
     """
     basis = []
     deg = form['dim']
@@ -71,9 +104,17 @@ def unpack_traces(form, a):
 
 
 def get_trace_and_norm_form(form):
-    """
-    Given a form (in our format, as a dictionary as loaded by `load_forms`)
-    returns the traces and norms of the first few a_p as a list.
+    """Returns the trace and norm of the a_p values of `form`
+
+    Parameters
+    ----------
+    form : dict
+        The modular form `form`
+    
+    Returns
+    -------
+    (list, list)
+        The a_p values of the trace and norm of `form`
     """
     R.<u> = PolynomialRing(QQ)
     K.<a> = NumberField(R(form['field_poly']))
@@ -82,8 +123,20 @@ def get_trace_and_norm_form(form):
 
 
 def prime_decomposition(K, p):
-    """
-    Get the decomposition of a prime p in a number field K
+    """Get the decomposition of a prime p in a number field K
+
+    Parameters
+    ----------
+    K
+        Number field
+    p
+        Prime number
+
+    Returns
+    -------
+    ( , int, int)
+        A triple :math:`(\mathfrak{p}, e_{\mathfrak{p}}, f_{\mathfrak{p}})`
+        consisiting of a prime ideal, its ramification and inertia indices
     """
     I = []
     J = K.ideal(p)
@@ -97,24 +150,54 @@ def prime_decomposition(K, p):
 
 
 def get_reductions(fp, F):
-    """
-    Gets the embeddings of k in F where k is a resiude field
+    """Returns the embeddings k_fp in F
+
+    Given a prime ideal `fp` and a finite field `F`, return the embeddings of
+    the residue field :math:`k_{\mathfrak{p}}` into `F` as a function which
+    returns the possible reductions of an element of the ring of integers of K.
+
+    Parameters
+    ----------
+    fp
+        A prime ideal in a number field
+    F
+        A finite field
+    
+    Returns
+    -------
+    function
+        The reductions from :math:`\mathcal{O}_K \to F`
     """
     K = fp.number_field()
     k = K.residue_field(fp)
-
     embs = Hom(k, F)
-
     def reductions(alpha):
         return [emb(k(alpha)) for emb in embs]
-
     return reductions
 
 
 def hash_values_sigma_h_L(form, fp, reduction_maps, list_of_l):
-    """
-    Each of the hash values sigma(h_L(f; fp)) where sigma ranges over
-    embeddings
+    """The hash value from Section 3
+    
+    Returns the hash values sigma(h_L(f; fp)) where sigma ranges over
+    embeddings of the field k_fp in a sufficiently large finite field.
+
+    Parameters
+    ----------
+    form : dict
+        The modular form
+    fp
+        A prime ideal in the coefficient ring of `form`
+    reduction_maps
+        The reduction maps O_K -> F returned by `get_reductions`
+    list_of_l : list
+        A list of prime numbers :math:`\mathcal{L}`. Note that here the
+        `list_of_l` is the indices of `\mathcal{L}` in the primes `PRIMES`
+
+    Returns
+    -------
+    list
+        The hashes
     """
     K = fp.number_field()
     a = K.gens()[0]
@@ -126,9 +209,22 @@ def hash_values_sigma_h_L(form, fp, reduction_maps, list_of_l):
 
 
 def make_hash_table(forms_by_field, p, list_of_l):
-    """
-    Implements the hash table of Cremona--Freitas
-     
+    """Implements the hash table in Section 3
+
+    Parameters
+    ----------
+    forms_by_field : dict
+        The modular forms in a dictionary whose keys are the number field.
+    p : int
+        Prime number
+    list_of_l : list 
+        A list of prime numbers :math:`\mathcal{L}`. Note that here the
+        `list_of_l` is the indices of `\mathcal{L}` in the primes `PRIMES`
+
+    Returns
+    -------
+    dict
+        A hash table whose keys are hashes and values are lists of modular forms
     """
     R.<u> = PolynomialRing(QQ)
     bad = prod([PRIMES[i] for i in list_of_l])
@@ -157,12 +253,39 @@ def make_hash_table(forms_by_field, p, list_of_l):
     return dict(hash_table)
 
 
-def verify_cong_for_primes(form1: dict, form2: dict, p: int, list_of_l: list) -> (bool, list):
-    """
+def verify_cong_for_primes(
+        form1: dict,
+        form2: dict,
+        p: int,
+        list_of_l: list
+) -> (bool, list):
+    """Partially verifies a `p`-congruence
+    
     Given a pair of forms `form1` and `form2` a prime number `p` and a list of
     prime numbers `list_of_l`, check whether there exists a pair of prime ideals
-    pp and qq above p such that the forms are (pp,qq)-congruent for each l in
+    :math:`\mathfrak{p}` and :math:`\mathfrak{q}` above `p` such that the forms
+    are :math:`(\mathfrak{p}, \mathfrak{q})`-congruent for each `l` in
     the `list_of_l`
+
+    Parameters
+    ----------
+    form1 : dict
+        A modular form
+    form2 : dict
+        A modular form
+    p : int
+        A prime number
+    list_of_l : list
+        A list of prime numbers :math:`\mathcal{L}`. Note that here the
+        `list_of_l` is the indices of `\mathcal{L}` in the primes `PRIMES`
+
+    Returns
+    -------
+    bool
+        A boolean which is true if and only if the congruence holds for the good
+        primes in `list_of_l`
+    list
+        A hash value which agrees for both `form1` and `form2`
     """
     R.<u> = PolynomialRing(QQ)
     deg_bd = max([form1['dim'], form2['dim']])
@@ -190,9 +313,26 @@ def verify_cong_for_primes(form1: dict, form2: dict, p: int, list_of_l: list) ->
 
 
 def list_to_verified(cong: list, p: int, list_of_l: list):
-    """
+    """Returns the congruences which hold for `list_of_l`
+    
     Given a list of candidate congruences `cong` for a prime `p` return the 
-    pairs which are (pp,qq)-congruence for the test list of primes `list_of_l`
+    pairs which are :math:`(\mathfrak{p},\mathfrak{q})`-congruences for the
+    test list of primes `list_of_l`
+
+    Parameters
+    ----------
+    congs : list
+        A list of potential congruences
+    p : int
+        A prime number
+    list_of_l : list
+        A list of prime numbers :math:`\mathcal{L}`. Note that here the
+        `list_of_l` is the indices of `\mathcal{L}` in the primes `PRIMES`
+
+    Returns
+    -------
+    list
+        A list of pairs which are congruent for all good primes in `list_of_l`
     """
     ret = []
     pairs = list(combinations([x for x in cong], 2))
@@ -205,11 +345,32 @@ def list_to_verified(cong: list, p: int, list_of_l: list):
     return ret
 
 
-def get_congs_from_hash_table(hash_table: dict, p: int, verify_ish=False) -> list:
-    """
+def get_congs_from_hash_table(
+        hash_table: dict,
+        p: int,
+        verify_ish=False
+) -> list, list:
+    """Given a hash table return the pairs of `p`-congruences within it
+    
     Given a hash table (of the form returned by `make_hash_table` return the
     congruences within. If the flag `verify_ish` is set to true then the
     congruences are then further checked for each good prime l <= 1000
+
+    Parameters
+    ----------
+    hash_table : dict
+        A hash table of the form returned by `make_hash_table`
+    p : int
+        A prime number
+    verify_ish : bool, default=False
+        Whether to verify the congruences for all good l<=1000
+
+    Returns
+    -------
+    list
+        A list of pairs of (verified up to 1000) congruences.
+    list
+        The hashes corresponding to the verified congruences.
     """
     # Hashes can sometimes contain twice the same form (for different primes) we
     # don't deal with this case, but it wouldn't be hard to incorporate
@@ -224,7 +385,7 @@ def get_congs_from_hash_table(hash_table: dict, p: int, verify_ish=False) -> lis
             if not form['label'] in [f['label'] for f in forms]:
                 forms.append(form)
         congs.append(forms)
-    print(mult_hs, congs)
+
     ret = []
     ret_hs = []
     if verify_ish:
