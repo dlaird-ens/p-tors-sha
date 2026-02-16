@@ -349,7 +349,7 @@ def get_congs_from_hash_table(
         hash_table: dict,
         p: int,
         verify_ish=False
-) -> list, list:
+) -> (list, list):
     """Given a hash table return the pairs of `p`-congruences within it
     
     Given a hash table (of the form returned by `make_hash_table` return the

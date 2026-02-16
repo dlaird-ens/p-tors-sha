@@ -4,15 +4,36 @@ tables.sage
 Utilities for producing tables like the ones in the paper.
 
 """
+import os
 load("congruence_search.sage")
 load("sha_helpers.sage")
 
 SMALL_PRIMES = list(primes(5, 4000))
-WEIER = load_weier("../data/label_to_curve.json")
+if os.path.exists("../data/label_to_curve.json"):
+    WEIER = load_weier("../data/label_to_curve.json")
+else:
+    WEIER = {}
 
-def load_congs(p, dim_bd=4, target_dir="../data/"):
-    """
 
+def load_congs(p: int, dim_bd=4, target_dir="../data/") -> list:
+    """Loads the congruences which have been precomputed
+
+    Loads congruences from the precomputed output data files
+    {target_dir}/congruences/*/{p}.json
+
+    Parameters
+    ----------
+    p : int
+        Prime number whose congruences we wish to load
+    dim_bd : int, default=4
+        The upper bound on the dimension fo the forms
+    target_dir : str, default="../data/"
+        The data directory
+    
+    Returns
+    -------
+    list
+        Congruences fored in data file
     """
     pattern = f"congruences/combined/{p}.json"
     with open(target_dir + pattern, "r") as f:
@@ -24,8 +45,25 @@ def load_congs(p, dim_bd=4, target_dir="../data/"):
 
 ################################################################################
 # TABLE B.1
-def congs_table(low_p, dim_bd=2, target_dir="../data/"):
-    """Outputs in latex format
+def congs_table(low_p: int, dim_bd=2, target_dir="../data/") -> str:
+    """Outputs in latex format a table of congruences
+
+    Outputs congruences with p >= `low_p` and with dimension at most `dim_bd`
+    from those congruences stored in `target_dir`
+
+    Parameters
+    ----------
+    low_p : int
+        A lower bound on the primes p in the table
+    dim_bd : int, default=2
+        An upper bound on the dimensions of the forms in the table
+    target_dir : str, default="../data/"
+        The data directory
+
+    Returns
+    -------
+    str
+        A latex syntax string of the table of congrences 
     """
     ret = ""
     my_p = [p for p in SMALL_PRIMES if p >= low_p]
@@ -48,8 +86,25 @@ def congs_table(low_p, dim_bd=2, target_dir="../data/"):
     return ret
 
 
-def congs_table_txt(low_p, dim_bd=2, target_dir="../data/"):
-    """Machine readable format
+def congs_table_txt(low_p: int, dim_bd=2, target_dir="../data/") -> str:
+    """Writes to a file a machine readible format of table of congruences
+
+    Outputs congruences with p >= `low_p` and with dimension at most `dim_bd`
+    from those congruences stored in `target_dir`. Writes into a file
+    target_dir + "tmp.txt"
+
+    Parameters
+    ----------
+    low_p : int
+        A lower bound on the primes p in the table
+    dim_bd : int, default=2
+        An upper bound on the dimensions of the forms in the table
+    target_dir : str, default="../data/"
+        The data directory
+
+    Returns
+    -------
+    None
     """
     my_p = [p for p in SMALL_PRIMES if p >= low_p]
     data = [load_congs(p, dim_bd=dim_bd) for p in my_p]
@@ -69,10 +124,32 @@ def congs_table_txt(low_p, dim_bd=2, target_dir="../data/"):
 # CONGRUENCES MISMATCHED
 # This is not a table we included, but it seems interesting to find congruences
 # where the dimensions are different
+def congs_mismatched_table(
+        low_p: int,
+        dim_a: int,
+        dim_b: int,
+        target_dir="../data/"
+) -> str:
+    """Outputs in latex format a table of congruences of given dimensions
 
-def congs_mismatched_table(low_p, dim_a, dim_b, target_dir="../data/"):
-    """
+    Outputs congruences with p >= `low_p` and with dimension at most `dim_bd`
+    from those congruences stored in `target_dir`
 
+    Parameters
+    ----------
+    low_p : int
+        A lower bound on the primes p in the table
+    dim_a : int
+        Dimension of the first form
+    dim_b : int
+        Dimension of the second form
+    target_dir : str, default="../data/"
+        The data directory
+
+    Returns
+    -------
+    str
+        A latex syntax string of the table of congrences 
     """
     ret = ""
     my_p = [p for p in SMALL_PRIMES if p >= low_p]
@@ -80,7 +157,7 @@ def congs_mismatched_table(low_p, dim_a, dim_b, target_dir="../data/"):
     info = []
     for i, congs in enumerate(data):
         for cong in congs:
-            if cong[0]['dim'] == dim_a and cong[1]['dim'] == dim_b:
+            if set([c['dim'] for c in cong]) == set([dim_a, dim_b]):
                 info.append((my_p[i], cong[0]['label'], cong[1]['label']))
 
     n = (len(info) + 1) // 2
@@ -92,19 +169,18 @@ def congs_mismatched_table(low_p, dim_a, dim_b, target_dir="../data/"):
             ret += f"{y[0]} & \\LMFDBLabelMF{{{y[1]}}} & \\LMFDBLabelMF{{{y[2]}}} \\\\ \n "
         else:
             ret += f" & & \\\\ \n "
-
     return ret
 
 
 ################################################################################
 # WEIRSTASS TABLE
-def make_weier_table(l):
+def make_weier_table(forms):
     """Given a list of forms whose associated jacobians are known, output the
     equivalent of Table B.3
     """
     R.<x> = PolynomialRing(QQ)
     ret = ""
-    for f in sorted(l):
+    for f in sorted(forms):
         C = [R(p) for p in WEIER[f]]
         if C[1] == 0:
             w_eq = f"y^2 = {latex(C[0])}"
@@ -118,11 +194,23 @@ def make_weier_table(l):
 
 ################################################################################
 # SHA TABLE
-def print_row(pair, p):
+def print_row(pair: list, p: int) -> str:
+    """Prints a row of Table B.2
+
+    Parameters
+    ----------
+    pair : list
+        A pair of `p`-congruent forms
+    p : int
+        A prime number
+
+    Returns
+    -------
+    str
+        A row of Table B.2
     """
-    Prints a row of Table B.2
-    """
-    ret = f"${p}$ & \\LMFDBLabelMF{{{pair[0]['label']}}} & \\LMFDBLabelMF{{{pair[1]['label']}}} & ${1}$ "
+    ret = f"${p}$ & \\LMFDBLabelMF{{{pair[0]['label']}}}"
+    ret += f" & \\LMFDBLabelMF{{{pair[1]['label']}}} & ${1}$ "
     if pair[0]['dim'] == 2:
         ret += f"& $\\QQ(\\sqrt{{{get_disc(pair[0])}}})$ "
     elif pair[0]['dim'] == 1:
@@ -169,16 +257,26 @@ def print_row(pair, p):
                 ret += f"& ${cprd}$"
             else:
                 ret += "& ??"
-            
     else:
         ret += "& ??"
 
     return ret + " \\" + "\\"
 
 
-def print_txt_row(pair, p):
-    """
-    Prints a row of Table B.2 in machine readable format
+def print_txt_row(pair: list, p: int) -> str:
+    """Prints a row of Table B.2 in machine readable format
+
+    Parameters
+    ----------
+    pair : list
+        A pair of `p`-congruent forms
+    p : int
+        A prime number
+
+    Returns
+    -------
+    str
+        A row of Table B.2 in machine readable format    
     """
     ret = f"{p}:"
     for fm in pair:

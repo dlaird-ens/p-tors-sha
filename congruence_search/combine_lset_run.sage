@@ -93,7 +93,7 @@ def flatten(data: list) -> list:
     return merged
 
 
-def load_congs(p: int, dim_bd=4, target_dir="../data/") -> dict:
+def load_congs(p: int, dim_bd=4, target_dir="../data/") -> list:
     """Loads the congruences which have been precomputed
 
     Loads congruences from the precomputed output data files
@@ -110,8 +110,8 @@ def load_congs(p: int, dim_bd=4, target_dir="../data/") -> dict:
     
     Returns
     -------
-    return_type
-        Return value description
+    list
+        Congruences fored in data file
     """
     pattern = f"congruences/*/{p}.json"
     files = list(Path(target_dir).glob(pattern))
