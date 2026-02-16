@@ -16,5 +16,5 @@ Files are named so that files associated to, for example, Theorem 1.4 are named 
 
 ## Dependencies
 - To run `1-4-theorem.sage` you should have installed [sage-cluster-pictures](https://alexjbest.github.io/cluster-pictures/index.html#how-to-install) (this also implicitly calls `RegualrModel` from `Magma` so you need a working `Magma` installation).
-- To run `3-3-prop.m` you should have installed and attached [Genus2Conductor](https://github.com/cjdoris/Genus2Conductor) and [endomorphisms](https://github.com/edgarcosta/endomorphisms). Reccommend [CHIMP](https://github.com/edgarcosta/CHIMP), but we have also included them as submodules. 
+- To run `2-3-prop.m` you should have installed and attached [Genus2Conductor](https://github.com/cjdoris/Genus2Conductor) and [endomorphisms](https://github.com/edgarcosta/endomorphisms). Reccommend [CHIMP](https://github.com/edgarcosta/CHIMP), but we have also included them as submodules. 
 - To run `1-4-theorem.m` and `5-section.m`  one should clone the repository [sha-7-examples](https://github.com/SamFrengley/sha-7-examples.git) (we have included it as a submodule).
