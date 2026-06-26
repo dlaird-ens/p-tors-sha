@@ -1,7 +1,7 @@
 This directory contains the data for the article. 
 
 ## The forms
-The file `nfs_dim_db_4.json` contains the newforms in the LMFBD whose coefficient fields have degree $\leq 4$ (in a format which can be used by the files in `../congruence_search`). Note:
+The file `nfs_dim_bd_4.json` (`bd_4` is for the dimension bound) contains the newforms in the LMFBD whose coefficient fields have degree $\leq 4$ (in a format which can be used by the files in `../congruence_search`). Note:
 - The file is initially populated by *only* those forms with level $N \leq 100$.
 - To prove Theorem 1.8 the full data should be extracted by `python3 run_extraction.py` in the `./code/` directory (this may take some time and a stable internet connection for the LMFDB). Partial computations will be saved to `./local/` in case of failure.
 

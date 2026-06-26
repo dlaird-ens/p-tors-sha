@@ -1,6 +1,6 @@
 /*
-// If you are not using CHIMP (reccommended) you can uncomment this block. However
-// we will not guarentee that all the dependencies are there
+// If you are not using CHIMP (recommended) you can uncomment this block. However
+// we will not guarantee that all the dependencies are there
 AttachSpec("../libs/ExactpAdics2/spec");
 AttachSpec("../libs/Genus2Conductor/spec_ExactpAdics");
 */

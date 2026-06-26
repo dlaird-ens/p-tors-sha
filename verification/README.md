@@ -15,6 +15,6 @@ Files are named so that files associated to, for example, Theorem 1.4 are named 
 
 
 ## Dependencies
-- To run `1-4-theorem.sage` you should have installed [sage-cluster-pictures](https://alexjbest.github.io/cluster-pictures/index.html#how-to-install) (this also implicitly calls `RegualrModel` from `Magma` so you need a working `Magma` installation).
-- To run `2-3-prop.m` you should have installed and attached [Genus2Conductor](https://github.com/cjdoris/Genus2Conductor) and [genus-2-RM](github.com/SamFrengley/genus-2-RM). Reccommend [CHIMP](https://github.com/edgarcosta/CHIMP) for the former, but we have also included it as a submodule. To use `genus-2-RM` you should make sure you run the `setup.py` script in that repository.
+- To run `1-4-theorem.sage` you should have installed [sage-cluster-pictures](https://alexjbest.github.io/cluster-pictures/index.html#how-to-install) (this also implicitly calls `RegularModel` from `Magma` so you need a working `Magma` installation).
+- To run `2-3-prop.m` you should have installed and attached [Genus2Conductor](https://github.com/cjdoris/Genus2Conductor) and [genus-2-RM](github.com/SamFrengley/genus-2-RM). Recommend [CHIMP](https://github.com/edgarcosta/CHIMP) for the former, but we have also included it as a submodule. To use `genus-2-RM` you should make sure you run the `setup.py` script in that repository.
 - To run `1-4-theorem.m` and `5-section.m`  one should clone the repository [sha-7-examples](https://github.com/SamFrengley/sha-7-examples.git) (we have included it as a submodule).

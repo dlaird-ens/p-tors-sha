@@ -51,17 +51,18 @@ def load_congs(p, dim_bd=4, target_dir="../data/"):
 
 
 if __name__ == "__main__":
-    congs = load_congs(p, dim_bd=4)
     lset = P_SETS[0]
-    hs = []
-    for cong in congs:
-        flag, h = verify_cong_for_primes(cong[0], cong[1], p, lset)
-        assert flag
-        hs.append(h[0])            
-            
-    vis = get_possibles_vis_from_congs(congs, hs, lset, p,
+    for p in SMALL_PRIMES:
+        congs = load_congs(p, dim_bd=4)
+        hs = []
+        for cong in congs:
+            flag, h = verify_cong_for_primes(cong[0], cong[1], p, lset)
+            assert flag
+            hs.append(h[0])
+        
+        vis = get_possible_vis_from_congs(congs, hs, lset, p,
                                       dim_bd=2, weier=WEIER)
-    vis.sort(key=sort_sha)
-    vis_file = TARGET_DIR + f"sha/{p}.json"
-    with open(vis_file, "w") as f:
-        json.dump(out_vis(vis, p), f, indent=2)                  
+        vis.sort(key=sort_sha)
+        vis_file = TARGET_DIR + f"sha/{p}.json"
+        with open(vis_file, "w") as f:
+            json.dump(out_vis(vis, p), f, indent=2)
