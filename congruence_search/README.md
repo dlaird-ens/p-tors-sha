@@ -1,4 +1,4 @@
-This directory contains the code to prove Theorem 1.8. Note that to run most of the scripts in this directory you should populate the file `../data/nfs_dim_db_4.json` as described therein.
+This directory contains the code to prove Theorem 1.8. Note that to run most of the scripts in this directory you should populate the file `../data/nfs_dim_bd_4.json` as described therein.
 
 ## Structure
 - `congruence_search.sage` this is the main file containing the functions to perform the seive described in the article. 

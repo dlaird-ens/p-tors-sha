@@ -18,5 +18,6 @@ The following capabilities should be installed.
 
 ### Magma
 - [Genus2Conductor](https://github.com/cjdoris/Genus2Conductor.git) : this is included as a submodule in `./libs/` however we encourage you to install through [CHIMP](github.com/edgarcosta/CHIMP).
-- [genus-2-RM](github.com/SamFrengley/genus-2-RM) : this is included as a submodule in `./libs/` and is a simple way of extracting the models for Hilbert modular surfaces given by Elkies--Kumar in [this article](https://arxiv.org/abs/1209.3527). To use `genus-2-RM` you should make sure you run the `setup.py` script in that repository
-- [sha-7-examples](github.com/SamFrengley/sha-7-examples) : this is included as a submodule in `./libs/` and is only needed for verifying the claims in Section 5.
+- [ExactpAdics2](https://github.com/cjdoris/ExactpAdics2.git) : this is a dependency of `Genus2Conductor` and is included as a submodule in `./libs/` again you can install through [CHIMP](github.com/edgarcosta/CHIMP).
+- [genus-2-RM](https://github.com/SamFrengley/genus-2-RM) : this is included as a submodule in `./libs/` and is a simple way of extracting the models for Hilbert modular surfaces given by Elkies--Kumar in [this article](https://arxiv.org/abs/1209.3527). To use `genus-2-RM` you should make sure you run the `setup.py` script in that repository
+- [sha-7-examples](https://github.com/SamFrengley/sha-7-examples) : this is included as a submodule in `./libs/` and is only needed for verifying the claims in Section 5.
