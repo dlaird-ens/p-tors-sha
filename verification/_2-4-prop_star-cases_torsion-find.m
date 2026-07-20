@@ -1,6 +1,11 @@
 /***************************************************
-   
+A script to compute pp | 11 division polynomials via
+a number of tricks. 
 ***************************************************/
+
+// You need to put this attach command in, see the README.md
+// Attach("/path/to/tricks.m");
+print "You need to attach the tricks file..., see the README.md";
 
 function Times3Kummer(K)
   // A function to compute polynomials for the
