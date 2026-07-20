@@ -16,8 +16,9 @@ The following capabilities should be installed.
 The simplest way to get the complete dataset needed to *verify* our calculations is to download it from [Zenodo](https://doi.org/10.5281/zenodo.20921990) and extract it into the `./data/` directory (overwriting some of the contents). For example one can run:
 ```bash
 rm -r ./data/ 
-curl ... 
+curl -fL -o data_for_p-tors-sha.tar.gz 'https://zenodo.org/records/20921990/files/data_for_p-tors-sha.tar.gz?download=1'
 tar -xzf data_for_p-tors-sha.tar.gz
+rm data_for_p-tors-sha.tar.gz
 mv ./data_for_p-tors-sha/ ./data/
 ```
 
