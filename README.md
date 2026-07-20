@@ -12,9 +12,18 @@ Most of the code in this repository is written in either [SageMath](https://www.
 ## Dependencies
 The following capabilities should be installed.
 
+### Zenodo data
+The simplest way to get the complete dataset needed to *verify* our calculations is to download it from [Zenodo](https://doi.org/10.5281/zenodo.20921990) and extract it into the `./data/` directory (overwriting some of the contents). For example one can run:
+```bash
+rm -r ./data/ 
+curl ... 
+tar -xzf data_for_p-tors-sha.tar.gz
+mv ./data_for_p-tors-sha/ ./data/
+```
+
 ### SageMath / Python
 - [sage-cluster-pictures](https://alexjbest.github.io/cluster-pictures/index.html#how-to-install) : which can be installed via `sage -pip install git+https://github.com/alexjbest/cluster-pictures.git`
-- [LMFDB-lite](https://github.com/roed314/lmfdb-lite)
+- (OPTIONAL) [LMFDB-lite](https://github.com/roed314/lmfdb-lite) : This is not a strict dependency of the project if the larger data files are downloaded from Zenodo as mentioned above, and is used only to populate the file `./data/nfs_dim_bd_4.json` (using `./data/code/run_extraction.py`).
 
 ### Magma
 - [Genus2Conductor](https://github.com/cjdoris/Genus2Conductor.git) : this is included as a submodule in `./libs/` however we encourage you to install through [CHIMP](https://github.com/edgarcosta/CHIMP).
