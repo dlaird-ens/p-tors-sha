@@ -1,4 +1,6 @@
-This directory contains the code to prove Theorem 1.8. Note that to run most of the scripts in this directory you should populate the file `../data/nfs_dim_db_4.json` as described therein.
+This directory contains the code to prove Theorem 1.8. Note that to run most of the scripts in this directory you should populate the file `../data/nfs_dim_bd_4.json` (is initially populated by *only* those forms with level $N \leq 100$). This can be done in one of the following ways:
+- (Preferred) Downloading the full data from [Zenodo](https://doi.org/10.5281/zenodo.20921990) (see `../README.md` for more details).
+- Running `python3 run_extraction.py` from in the directory `../data/code/` (this uses LMFDB-lite).
 
 ## Structure
 - `congruence_search.sage` this is the main file containing the functions to perform the seive described in the article. 

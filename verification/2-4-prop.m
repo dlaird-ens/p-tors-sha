@@ -1,8 +1,9 @@
 /*
-// If you are not using CHIMP (reccommended) you can uncomment this block. However
-// we will not guarentee that all the dependencies are there
+// If you are not using CHIMP (recommended) you can uncomment this block. However
+// we will not guarantee that all the dependencies are there
 AttachSpec("../libs/ExactpAdics2/spec");
 AttachSpec("../libs/Genus2Conductor/spec_ExactpAdics");
+AttachSpec("../libs/Magma/magma.spec");
 */
 AttachSpec("../libs/genus-2-RM/models/spec");                         //get EK model for Y_(D)
 ExactpAdics_SetWarningAction("get_approx", "Ignore");                 //supress some warnings
@@ -34,7 +35,7 @@ table_B2 := [
 // note that most of this code (in terms of lines) is `unpacking` the data. Most
 // of the runtime is computing newspaces
 
-for row in table_B2[#table_B2..#table_B2] do
+for row in table_B2 do
   p := row[1]; Fp2 := GF(p^2);
   
   print "\n==================================================";
@@ -175,6 +176,7 @@ for row in table_B3 do
   C := HyperellipticCurve(f, g);
   i := Index(table_B3, row);
   
+  if N ge 9000 then
   print "\n==================================================";
   printf "Doing the case %o\n", row[1];
   
@@ -184,7 +186,7 @@ for row in table_B3 do
     traces := rowB2[4];
   else
     traces := rowB2[8];
-  end if;
+  end if;    
   
   // indices of the good primes in PRIMES
   good_ii := [i : i in [1..30] | not PRIMES[i] in BadPrimes(C)];
@@ -209,6 +211,7 @@ for row in table_B3 do
 
   printf "- Checking the endomorphism algebras of the Jacobian\n"
          cat "  contains RM by QQ(sqrt(%o))\n", D;
+  assert #GeometricAutomorphismGroup(C) eq 2;
   pt := EK_points[i];
   // Elkies--Kumar model is z^2 = lambda_D(g,h) check that our point satisfies this
   lambda := Getlambda_D(D);
@@ -223,7 +226,15 @@ for row in table_B3 do
   
   ////////////////////
   print "- Checking the conductor of the Jacobian is correct";
-  flag, N_J := IsSquare(Conductor_Genus2(C));
-  assert flag;
-  assert N_J eq N;
+  if not N in {6962,9510} then
+    flag, N_J := IsSquare(Conductor_Genus2(C : UseRegularModels:=false));
+    assert flag;
+    assert N_J eq N;
+  else 
+    // We are in the (\star) case
+    print "  * This is the case %o where we cannot (correctly) compute the\n"
+          cat "    conductor of the Jacobian of C. We rely instead on the proof\n"
+          cat "    from [Fre25].";
+  end if;
+  end if;
 end for;

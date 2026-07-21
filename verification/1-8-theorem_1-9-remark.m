@@ -1,3 +1,8 @@
+/*
+// If you are not using CHIMP (recommended) you can uncomment this block. However
+// we will not guarantee that all the dependencies are there
+AttachSpec("../libs/Magma/magma.spec");
+*/
 load "modular_form_helpers.m";
 
 ////////////////////////////////////////////////////////////////////////////////

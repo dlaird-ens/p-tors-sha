@@ -1,1 +1,3 @@
-Theorem 1.8 is the output of running the code `../congruence_search/congruence_run.sage` and `../congruence_search/combine_lset_run.sage` as described in the README.md in that directory.
+The first part of Theorem 1.8 is the output of running the code `../congruence_search/congruence_run.sage` and `../congruence_search/combine_lset_run.sage` as described in the README.md in that directory.
+
+The proof of the congruences in Table B.1 follows by comparing Fourier coefficients. This is done in `1-8-theorem.m`.

@@ -1,12 +1,15 @@
 [submodule "libs/genus-2-RM"]
 	path = libs/genus-2-RM
-	url = git@github.com:SamFrengley/genus-2-RM.git
+	url = https://github.com/SamFrengley/genus-2-RM.git
 [submodule "libs/sha-7-examples"]
 	path = libs/sha-7-examples
-	url = git@github.com:SamFrengley/sha-7-examples.git
+	url = https://github.com/SamFrengley/sha-7-examples.git
 [submodule "libs/Genus2Conductor"]
 	path = libs/Genus2Conductor
-	url = git@github.com:cjdoris/Genus2Conductor.git
+	url = https://github.com/cjdoris/Genus2Conductor.git
 [submodule "libs/ExactpAdics2"]
 	path = libs/ExactpAdics2
-	url = git@github.com:cjdoris/ExactpAdics2.git
+	url = https://github.com/cjdoris/ExactpAdics2.git
+[submodule "libs/Magma"]
+	path = libs/Magma
+	url = https://github.com/AndrewVSutherland/Magma.git
